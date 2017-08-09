@@ -17,6 +17,7 @@ public class App
 {
     public static void main( String[] args )
     {
+    	port(8080);
     	get("/", (req, res) -> {
     		Map<String, Object> attributes = new HashMap<>();
     		String min = req.queryParamOrDefault("min", "1");
