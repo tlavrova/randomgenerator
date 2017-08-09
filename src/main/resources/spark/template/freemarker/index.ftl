@@ -3,22 +3,34 @@
   <head>
     <meta charset="utf-8">
     <title>Random generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
-  <style>
-  	h1 {
-  		font-size: 15pt;
-  	}
-  </style>
   <body>
+  <div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col">
   	<form>
-  	Min:<br>
-  	<input type="number" name="min" value="${min}">
+  	<div class="mdl-textfield mdl-js-textfield">
+  	Min:
+  	<input name="min" value="${min}" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+    <span class="mdl-textfield__error">Input is not a number!</span>
+  	</div>
   	<br>
-  	Max:<br>
-  	<input type="number" name="max" value="${max}">
+  	<div class="mdl-textfield mdl-js-textfield">
+  	Max:
+  	<input name="max" value="${max}" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+    <span class="mdl-textfield__error">Input is not a number!</span>
+  	</div>
   	<br><br>
-  	<input type="submit" value="Generate">
+  	<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+  		Generate
+	</button>
   	</form>
+  	</div>
+  	<div class="mdl-cell mdl-cell--4-col">
     <h1>${randomNumber}</h1>
+    </div>
+    </div>
   </body>
 </html>
