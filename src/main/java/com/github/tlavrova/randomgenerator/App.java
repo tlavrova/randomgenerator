@@ -1,8 +1,12 @@
 package com.github.tlavrova.randomgenerator;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import static spark.Spark.*;
 
-import java.util.Random;
+import spark.ModelAndView;
+import spark.template.freemarker.FreeMarkerEngine;
 
 /**
  * Random number generator
@@ -13,30 +17,29 @@ public class App
 {
     public static void main( String[] args )
     {
-//    	get("/hello", (req, res) -> "Hello Tatiana");
-    	log("Generating random integers in the range 1..10");
-    	int START = 1;
-    	int END = 10;
-    	Random random = new Random();
-    	for (int idx = 1; idx <= 10; ++idx) {
-    		showRandomInteger(START, END, random);
-    	}
-    	log("Done.");
+    	get("/hello", (req, res) -> {
+    		Map<String, Object> attributes = new HashMap<>();
+    		String min = req.queryParamOrDefault("min", "1");
+    		String max = req.queryParamOrDefault("max", "100");
+    		attributes.put("min", min);
+    		attributes.put("max", max);
+    		Random random = new Random();
+    		int minInt = Integer.parseInt(min);
+    		int maxInt = Integer.parseInt(max);
+    		int randomNumber = getRandomInteger(minInt, maxInt, random);
+    		attributes.put("randomNumber", randomNumber);
+    		return new ModelAndView(attributes, "hello.ftl");
+    	} , new FreeMarkerEngine());
     }
 
-	private static void showRandomInteger(int sTART, int eND, Random random) {
-		if (sTART > eND) {
+	private static int getRandomInteger(int start, int end, Random random) {
+		if (start > end) {
 			throw new IllegalArgumentException("Start cannot exceed End.");
 		}
-		//get the range, casting to long to avoid overflow problems
-		long range = (long)eND - (long)sTART + 1;
-		//compute a fraction of the range, 0 <= frac <= range
-		long fraction = (long)(range * random.nextDouble());
-		int randomNumber = (int)(fraction + sTART);
-		log("Generated: " + randomNumber);
+		int range = end - start + 1;
+		//compute a randomNumber of the range, 0 <= randomNumber < range
+		int randomNumber = random.nextInt(range);
+		return start + randomNumber;
 	}
 	
-	private static void log(String string) {
-		System.out.println(string);		
-	}
 }
