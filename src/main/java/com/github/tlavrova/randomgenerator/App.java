@@ -17,7 +17,7 @@ public class App
 {
     public static void main( String[] args )
     {
-    	get("/hello", (req, res) -> {
+    	get("/", (req, res) -> {
     		Map<String, Object> attributes = new HashMap<>();
     		String min = req.queryParamOrDefault("min", "1");
     		String max = req.queryParamOrDefault("max", "100");
@@ -28,7 +28,7 @@ public class App
     		int maxInt = Integer.parseInt(max);
     		int randomNumber = getRandomInteger(minInt, maxInt, random);
     		attributes.put("randomNumber", randomNumber);
-    		return new ModelAndView(attributes, "hello.ftl");
+    		return new ModelAndView(attributes, "index.ftl");
     	} , new FreeMarkerEngine());
     }
 
